@@ -1,0 +1,41 @@
+{
+  "nim": "2415051103",
+  "nama": "Ni Made Tia Wiandani",
+  "courses": [
+    {
+      "code": "MOB01",
+      "name": "Git & GitHub",
+      "credits": 2,
+      "status": "Selesai",
+      "category": "Version Control"
+    },
+    {
+      "code": "MOB02",
+      "name": "Dart Fundamentals",
+      "credits": 3,
+      "status": "Selesai",
+      "category": "Programming"
+    },
+    {
+      "code": "MOB03",
+      "name": "Flutter UI Fundamentals",
+      "credits": 3,
+      "status": "Selesai",
+      "category": "UI Development"
+    },
+    {
+      "code": "MOB04",
+      "name": "Navigation",
+      "credits": 2,
+      "status": "Belum",
+      "category": "Flutter"
+    },
+    {
+      "code": "MOB05",
+      "name": "State Management",
+      "credits": 3,
+      "status": "Belum",
+      "category": "Flutter"
+    }
+  ]
+}
