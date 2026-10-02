@@ -1,17 +1,21 @@
-# flutter_ui_fundamentals
+# Proyek Pemrograman Mobile
 
-A new Flutter project.
+## Tujuan
 
-## Getting Started
+Proyek ini merupakan aplikasi profil mahasiswa sederhana berbasis Flutter yang bertujuan untuk menampilkan informasi profil dan data mahasiswa secara sederhana.
 
-This project is a starting point for a Flutter application.
+## Rencana Fitur
 
-A few resources to get you started if this is your first Flutter project:
+1. Menampilkan informasi profil mahasiswa.
+2. Menampilkan data mahasiswa yang disimpan dalam format JSON.
+3. Menampilkan foto atau gambar profil mahasiswa.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Cara Menjalankan
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Pastikan Flutter sudah terpasang dan dapat digunakan pada komputer.
+
+Jalankan perintah berikut pada terminal:
+
+```bash
+flutter pub get
+flutter run
