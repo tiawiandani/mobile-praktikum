@@ -3,6 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'providers/task_provider.dart';
+import 'screens/task_list_screen.dart';
+
 Future<Map<String, dynamic>> loadStudentData() async {
   final jsonString = await rootBundle.loadString(
     'assets/data/student_data.json',
@@ -137,9 +142,24 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Learning Dashboard '),
-      ),
+     appBar: AppBar(
+  title: const Text('Learning Dashboard'),
+  actions: [
+    IconButton(
+      icon: const Icon(Icons.assignment),
+      tooltip: 'Buka TaskMate',
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const TaskListScreen(),
+          ),
+        );
+      },
+    ),
+  ],
+),
+      
       body: FutureBuilder<Map<String, dynamic>>(
         future: studentFuture,
         builder: (context, snapshot) {
@@ -263,7 +283,8 @@ class _DashboardPageState extends State<DashboardPage> {
                         margin: const EdgeInsets.only(
                           bottom: 8,
                         ),
-                        child: ListTile(
+                        child: ListTile(    
+
                           leading: CircleAvatar(
                             child: Icon(
                               isCompleted
@@ -306,9 +327,22 @@ class _DashboardPageState extends State<DashboardPage> {
 // ===============================
 // MAIN APP
 // ===============================
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: 'https://ruwxizjwvhhhaegtladw.supabase.co',
+    publishableKey: 'sb_publishable_L_Jjq1F1J12RA5kJO3rgfQ_brpWhODk',
+  );
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => TaskProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -325,6 +359,22 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const DashboardPage(),
+    );
+  }
+}
+
+class CourseDetailPage extends StatelessWidget {
+  const CourseDetailPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Detail Mata Kuliah'),
+      ),
+      body: const Center(
+        child: Text('Halaman Detail Mata Kuliah'),
+      ),
     );
   }
 }
