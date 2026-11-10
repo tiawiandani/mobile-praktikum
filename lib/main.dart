@@ -7,6 +7,9 @@ import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'providers/task_provider.dart';
 import 'screens/task_list_screen.dart';
+import 'widgets/profile_card.dart';
+import 'widgets/summary_card.dart';
+import 'widgets/course_card.dart';
 
 Future<Map<String, dynamic>> loadStudentData() async {
   final jsonString = await rootBundle.loadString(
@@ -16,109 +19,6 @@ Future<Map<String, dynamic>> loadStudentData() async {
   return jsonDecode(jsonString) as Map<String, dynamic>;
 }
 
-// ===============================
-// REUSABLE WIDGET: PROFILE CARD
-// ===============================
-class ProfileCard extends StatelessWidget {
-  final String nama;
-  final String nim;
-
-  const ProfileCard({
-    super.key,
-    required this.nama,
-    required this.nim,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            const CircleAvatar(
-              radius: 32,
-              child: Icon(
-                Icons.person,
-                size: 36,
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    nama,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'NIM: $nim',
-                    style: const TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// ===============================
-// REUSABLE WIDGET: SUMMARY CARD
-// ===============================
-class SummaryCard extends StatelessWidget {
-  final String title;
-  final String value;
-  final IconData icon;
-
-  const SummaryCard({
-    super.key,
-    required this.title,
-    required this.value,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Icon(
-                icon,
-                size: 30,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                title,
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 // ===============================
 // DASHBOARD PAGE
@@ -276,41 +176,14 @@ class _DashboardPageState extends State<DashboardPage> {
                       final category =
                           course['category'] as String;
 
-                      final isCompleted =
-                          status == 'Selesai';
+                      
 
-                      return Card(
-                        margin: const EdgeInsets.only(
-                          bottom: 8,
-                        ),
-                        child: ListTile(    
-
-                          leading: CircleAvatar(
-                            child: Icon(
-                              isCompleted
-                                  ? Icons.check
-                                  : Icons.schedule,
-                            ),
-                          ),
-                          title: Text(
-                            '$code - $name',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          subtitle: Text(
-                            '$credits SKS • $category',
-                          ),
-                          trailing: Text(
-                            status,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: isCompleted
-                                  ? Colors.green
-                                  : Colors.orange,
-                            ),
-                          ),
-                        ),
+                      return CourseCard(
+                       code: code,
+                       name: name,
+                       credits: credits,
+                       status: status,
+                       category: category,
                       );
                     },
                   ),
