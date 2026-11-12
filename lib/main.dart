@@ -1,3 +1,4 @@
+import 'models/student.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -11,12 +12,14 @@ import 'widgets/profile_card.dart';
 import 'widgets/summary_card.dart';
 import 'widgets/course_card.dart';
 
-Future<Map<String, dynamic>> loadStudentData() async {
+Future<Student> loadStudentData() async {
   final jsonString = await rootBundle.loadString(
     'assets/data/student_data.json',
   );
 
-  return jsonDecode(jsonString) as Map<String, dynamic>;
+  return Student.fromJson(
+  jsonDecode(jsonString) as Map<String, dynamic>,
+  );
 }
 
 
@@ -31,7 +34,8 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  late Future<Map<String, dynamic>> studentFuture;
+  late Future<Student> studentFuture;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -60,7 +64,7 @@ class _DashboardPageState extends State<DashboardPage> {
   ],
 ),
       
-      body: FutureBuilder<Map<String, dynamic>>(
+      body: FutureBuilder<Student>(
         future: studentFuture,
         builder: (context, snapshot) {
           // ===============================
@@ -94,22 +98,23 @@ class _DashboardPageState extends State<DashboardPage> {
 
           final student = snapshot.data!;
 
-          final nim = student['nim'] as String;
-          final nama = student['nama'] as String;
-
-          final courses =
-              student['courses'] as List<dynamic>;
+          final nim = student.nim;
+          final nama = student.nama;
+          final courses = student.courses;
 
           // Menghitung total SKS
           final totalCredits = courses.fold<int>(
             0,
-            (sum, course) =>
-                sum + (course['credits'] as int),
+            (sum, course) => sum + course.credits,
           );
+          final isWide = MediaQuery.sizeOf(context).width >= 600;
 
-          return Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
+          return Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1000),
+               child: Padding(
+                  padding: const EdgeInsets.all(16),
+                    child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // ===============================
@@ -125,21 +130,48 @@ class _DashboardPageState extends State<DashboardPage> {
                 // ===============================
                 // SUMMARY CARDS
                 // ===============================
-                Row(
-                  children: [
-                    SummaryCard(
-                      title: 'Total Mata Kuliah',
-                      value: '${courses.length}',
-                      icon: Icons.menu_book,
-                    ),
-                    const SizedBox(width: 12),
-                    SummaryCard(
-                      title: 'Total SKS',
-                      value: '$totalCredits',
-                      icon: Icons.school,
-                    ),
-                  ],
-                ),
+                if (isWide)
+  Row(
+    children: [
+      Expanded(
+        child: SummaryCard(
+          title: 'Total Mata Kuliah',
+          value: '${courses.length}',
+          icon: Icons.menu_book,
+        ),
+      ),
+      const SizedBox(width: 12),
+      Expanded(
+        child: SummaryCard(
+          title: 'Total SKS',
+          value: '$totalCredits',
+          icon: Icons.school,
+        ),
+      ),
+    ],
+  )
+else
+  Column(
+    children: [
+      SizedBox(
+        width: double.infinity,
+        child: SummaryCard(
+          title: 'Total Mata Kuliah',
+          value: '${courses.length}',
+          icon: Icons.menu_book,
+        ),
+      ),
+      const SizedBox(height: 12),
+      SizedBox(
+        width: double.infinity,
+        child: SummaryCard(
+          title: 'Total SKS',
+          value: '$totalCredits',
+          icon: Icons.school,
+        ),
+      ),
+    ],
+  ),
 
                 const SizedBox(height: 16),
 
@@ -160,38 +192,75 @@ class _DashboardPageState extends State<DashboardPage> {
                 // COURSE LIST
                 // ===============================
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: courses.length,
-                    itemBuilder: (context, index) {
-                      final course = courses[index];
+          child: isWide
+        ? GridView.builder(
+          itemCount: courses.length,
+          gridDelegate:
+              const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 2.5,
+          ),
+          itemBuilder: (context, index) {
+            final course = courses[index];
 
-                      final code =
-                          course['code'] as String;
-                      final name =
-                          course['name'] as String;
-                      final credits =
-                          course['credits'] as int;
-                      final status =
-                          course['status'] as String;
-                      final category =
-                          course['category'] as String;
+            return CourseCard(
+              code: course.code,
+              name: course.name,
+              credits: course.credits,
+              status: course.status,
+              category: course.category,
+            );
+          },
+        )
+      : ListView.builder(
+          itemCount: courses.length,
+          itemBuilder: (context, index) {
+            final course = courses[index];
 
-                      
-
-                      return CourseCard(
-                       code: code,
-                       name: name,
-                       credits: credits,
-                       status: status,
-                       category: category,
-                      );
-                    },
-                  ),
-                ),
-              ],
+            return CourseCard(
+              code: course.code,
+              name: course.name,
+              credits: course.credits,
+              status: course.status,
+              category: course.category,
+            );
+          },
+        ),
+      ),
+                            ],
             ),
-          );
+          ),
+        ),); // Center
+}, // builder
+), // FutureBuilder
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: (index) {
+          if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const TaskListScreen(),
+              ),
+            );
+          } else {
+            setState(() {
+              _selectedIndex = 0;
+            });
+          }
         },
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.dashboard),
+            label: 'Dashboard',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.assignment),
+            label: 'TaskMate',
+          ),
+        ],
       ),
     );
   }
