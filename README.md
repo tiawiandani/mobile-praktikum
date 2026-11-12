@@ -1,18 +1,19 @@
+
 # TaskMate – Aplikasi Manajemen Tugas Mahasiswa
+
+## Identitas Mahasiswa
+
+- Nama: Ni Made Tia Wiandani
+- NIM: 2415051103
+- Kelas: 5B
+- Program Studi: Pendidikan Teknik Informatika
+- Universitas: Universitas Pendidikan Ganesha
 
 ## Deskripsi Proyek
 
 TaskMate merupakan aplikasi manajemen tugas mahasiswa berbasis Flutter yang dikembangkan untuk memenuhi tugas Ujian Tengah Semester (UTS) Pemrograman Mobile.
 
-Aplikasi ini membantu mahasiswa mengelola tugas perkuliahan, mulai dari menambahkan, melihat, mengedit, hingga menghapus tugas. Data tugas disimpan secara permanen menggunakan Supabase.
-
-## Tujuan
-
-1. Mengembangkan aplikasi mobile menggunakan Flutter.
-2. Menerapkan pengelolaan state menggunakan Provider dan ChangeNotifier.
-3. Mengintegrasikan aplikasi dengan REST API.
-4. Mengimplementasikan operasi CRUD menggunakan Supabase.
-5. Menerapkan struktur proyek yang terorganisasi.
+Aplikasi ini membantu mahasiswa mengelola tugas perkuliahan melalui fitur tambah, lihat, edit, dan hapus tugas. Data disimpan secara permanen menggunakan Supabase.
 
 ## Fitur Aplikasi
 
@@ -22,22 +23,24 @@ Aplikasi ini membantu mahasiswa mengelola tugas perkuliahan, mulai dari menambah
 4. Melihat detail tugas.
 5. Mengedit informasi tugas.
 6. Menghapus tugas dengan konfirmasi.
-7. Mengambil data dari REST API JSONPlaceholder.
-8. Menyimpan data tugas secara permanen menggunakan Supabase.
-9. Validasi formulir dan notifikasi SnackBar.
+7. Mengambil data REST API JSONPlaceholder.
+8. Penyimpanan permanen menggunakan Supabase.
+9. Validasi formulir.
+10. Notifikasi SnackBar dan Dialog.
+11. Tampilan responsif.
+12. Navigasi menggunakan NavigationBar.
 
 ## Teknologi yang Digunakan
 
-- Flutter
-- Dart
-- Provider
-- Supabase
-- PostgreSQL
-- REST API
-- JSONPlaceholder
+- Flutter dan Dart
+- Provider dan ChangeNotifier
+- Supabase dan PostgreSQL
+- REST API JSONPlaceholder
 - Git dan GitHub
 
-## Struktur Folder
+## Arsitektur Aplikasi
+
+Proyek menggunakan pemisahan tanggung jawab berdasarkan folder:
 
 ```text
 lib/
@@ -50,31 +53,65 @@ lib/
 └── main.dart
 ```
 
+Alur pengelolaan data:
+
+UI → Provider → Repository → Service / Database
+
+## State Management
+
+Pengelolaan state menggunakan Provider dan ChangeNotifier untuk mengelola data tugas, proses loading, dan perubahan data aplikasi.
+
+## Responsive Layout
+
+Aplikasi menggunakan MediaQuery untuk menyesuaikan tampilan berdasarkan ukuran layar.
+
+Pada layar lebar, daftar mata kuliah ditampilkan menggunakan GridView, sedangkan pada layar sempit menggunakan ListView.
+
+## REST API
+
+Sumber REST API:
+
+https://jsonplaceholder.typicode.com/todos
+
+Aplikasi mengambil data menggunakan HTTP GET, kemudian mengubah JSON menjadi objek Dart Model.
+
+## Database
+
+Backend menggunakan Supabase dengan database PostgreSQL dan tabel `tasks`.
+
+Kolom data:
+- id
+- title
+- course
+- description
+- due_date
+- status
+- created_at
+
+Operasi database meliputi Create, Read, Update, dan Delete (CRUD).
+
+## Pengujian Otomatis
+
+Pengujian dilakukan menggunakan Flutter Test.
+
+Pengujian Model meliputi:
+- Student.fromJson()
+- Task.fromJson()
+- Task.toJson()
+- Task.copyWith()
+
+Seluruh empat pengujian berhasil dijalankan.
+
+## Repository GitHub
+
+https://github.com/tiawiandani/mobile-praktikum
+
 ## Cara Menjalankan Aplikasi
-
-Pastikan Flutter dan Dart sudah terpasang pada komputer.
-
-1. Clone repository:
 
 ```bash
 git clone https://github.com/tiawiandani/mobile-praktikum.git
-```
-
-2. Masuk ke folder proyek:
-
-```bash
 cd mobile-praktikum
-```
-
-3. Instal dependensi:
-
-```bash
 flutter pub get
-```
-
-4. Jalankan aplikasi:
-
-```bash
 flutter run
 ```
 
@@ -84,29 +121,6 @@ Untuk menjalankan melalui Chrome:
 flutter run -d chrome
 ```
 
-## Database
-
-TaskMate menggunakan Supabase sebagai backend database dengan tabel `tasks`.
-
-Data tugas meliputi:
-- id
-- title
-- course
-- description
-- due_date
-- status
-- created_at
-
-## REST API
-
-Aplikasi menggunakan JSONPlaceholder sebagai sumber data REST API:
-
-https://jsonplaceholder.typicode.com/todos
-
-## Repository GitHub
-
-https://github.com/tiawiandani/mobile-praktikum
-
 ---
 
-**Proyek UTS Pemrograman Mobile – TaskMate**
+Proyek UTS Pemrograman Mobile – TaskMate
