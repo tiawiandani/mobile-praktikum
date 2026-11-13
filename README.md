@@ -121,6 +121,16 @@ Untuk menjalankan melalui Chrome:
 flutter run -d chrome
 ```
 
----
+---## Screenshot Aplikasi
+
+Dokumentasi tampilan aplikasi TaskMate:
+
+- Dashboard: `dashboard.png`
+- Daftar tugas: `task-list.png`
+- Detail tugas: `task-detail.png`
+- Tambah tugas: `task-add.png`
+- Edit tugas: `task-edit.png`
+- REST API: `rest-api.png`
+- Tampilan responsif: `responsive.png`
 
 Proyek UTS Pemrograman Mobile – TaskMate
