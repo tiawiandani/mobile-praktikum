@@ -121,7 +121,8 @@ Untuk menjalankan melalui Chrome:
 flutter run -d chrome
 ```
 
----## Screenshot Aplikasi
+---
+## Screenshot Aplikasi
 
 Dokumentasi tampilan aplikasi TaskMate:
 
