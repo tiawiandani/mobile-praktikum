@@ -125,12 +125,24 @@ flutter run -d chrome
 
 Dokumentasi tampilan aplikasi TaskMate:
 
-- Dashboard: `dashboard.png`
-- Daftar tugas: `task-list.png`
-- Detail tugas: `task-detail.png`
-- Tambah tugas: `task-add.png`
-- Edit tugas: `task-edit.png`
-- REST API: `rest-api.png`
-- Tampilan responsif: `responsive.png`
+### 1. Dashboard
+![Dashboard](screenshots/dashboard.png)
 
+### 2. Daftar Tugas
+![Daftar Tugas](screenshots/task-list.png)
+
+### 3. Detail Tugas
+![Detail Tugas](screenshots/task-detail.png)
+
+### 4. Tambah Tugas
+![Tambah Tugas](screenshots/task-add.png)
+
+### 5. Edit Tugas
+![Edit Tugas](screenshots/task-edit.png)
+
+### 6. REST API
+![REST API](screenshots/rest-api.png)
+
+### 7. Tampilan Responsif
+![Tampilan Responsif](screenshots/responsive.png)
 Proyek UTS Pemrograman Mobile – TaskMate
